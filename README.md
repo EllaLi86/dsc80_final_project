@@ -56,7 +56,10 @@ The `nutrition` column contained string representations of lists. I converted th
 **4. Split values in the nutrition column to individual columns of floats**
 From the nutrition lists, I extracted each nutritional component and created separate columns for calories, total fat, sugar, sodium, protein, saturated fat, and carbohydrates. This allowed for more detailed analysis of how specific nutritional factors relate to ratings.
 
-**5. Check dataframe info and types**
+**5. Convert `submitted` column datetime**
+The `submitted` column is stored as objects. I converted it into datetime to conduct the later analysis on trends over time if it is necessary.
+
+**6. Check dataframe info and types**
 Here are all the columns of the cleaned df. The `merged` dataframe contains **83,782 rows** and **20 columns**.
 
 | Column | Type |
@@ -65,7 +68,7 @@ Here are all the columns of the cleaned df. The `merged` dataframe contains **83
 | 'id' | int64 |
 | 'minutes' | int64 |
 | 'contributor_id' | int64 |
-| 'submitted' | object |
+| 'submitted' | datetime64 |
 | 'tags' | object |
 | 'nutrition' | object |
 | 'n_steps' | int64 |
@@ -81,8 +84,6 @@ Here are all the columns of the cleaned df. The `merged` dataframe contains **83
 | 'protein ' | float64 |
 | 'saturated fat  ' | float64 |
 | 'carbohydrates' | float64 |
-
-
 
 
 
