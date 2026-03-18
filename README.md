@@ -178,11 +178,10 @@ Three columns in the merged dataset have missing values: 'name', 'description', 
 I believe that the 70 missingness of the **'description'** column is **NMAR** (Not Missing at Random). If people feel indifferent about a recipe, they are less likely to leave a review since they would feel they have nothing significant to say. People usually leave a review only when they have stronger emotions toward the recipe—whether positive or negative. Their emotions motivate them to navigate to the page, click through multiple buttons, and take time out of their day to write. For example, someone who thoroughly enjoyed a recipe would be willing to do all the work to leave a positive review, while someone who had a terrible experience might be motivated to warn others. Those with neutral experiences, however, have no such motivation, making their reviews systematically missing.
 
 ### Missingness Dependency
-Now I examine the missingness of 'avg_rating' in the merged DataFrame by testing the dependency of its missingness. 
-
-I am investigating whether the missingness in the 'rating' column depends on the column 'minutes', which is the cooking time of the recipe.
+Now I examine the missingness of `avg_rating` in the merged DataFrame by testing the dependency of its missingness.
 
 **Cooking Time and Rating Missingness**
+I am investigating whether the missingness in the `rating` column depends on the column `minutes`, which is the cooking time of the recipe.
 
 **Null Hypothesis:** The missingness of ratings does not depend on the cooking time (minutes) of the recipe.
 
@@ -197,7 +196,6 @@ I am investigating whether the missingness in the 'rating' column depends on the
   height="600"
   frameborder="0"
 ></iframe>
-
 <iframe
   src="assets/rating_missing_time_permutation.html"
   width="800"
@@ -205,12 +203,44 @@ I am investigating whether the missingness in the 'rating' column depends on the
   frameborder="0"
 ></iframe>
 
-
 **Results:** 
 - Observed Difference: 117.34 minutes
 - P-value: 0.041
 
 Since the p-value (0.041) is less than our significance level of 0.05, we **reject the null hypothesis**. This suggests that the missingness of ratings does depend on the cooking time of the recipe.
+
+**Protein and Rating Missingness**
+I also investigated whether the missingness of ratings depends on the protein content of recipes. 
+
+**Null Hypothesis:** The missingness of ratings does not depend on the protein amount of the recipe.
+
+**Alternate Hypothesis:** The missingness of ratings does depend on the protein amount of the recipe.
+
+**Test Statistic:** The absolute difference in mean protein between the group with missing ratings and the group without missing ratings.
+
+**Significance Level:** 0.05
+<iframe
+  src="assets/rating_missing_protein_distribution.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+<iframe
+  src="assets/rating_missing_protein_permutation.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+**Results:** 
+- Observed Difference: 1.2873110276228346
+- P-value: 0.183
+
+The permutation test yielded a p-value of 0.183, which is greater than our significance level of 0.05. Therefore, we fail to reject the null hypothesis.
+
+This result provides insufficient statistical evidence to conclude that the missingness of ratings depends on the protein content of recipes. The observed difference in mean protein content between recipes with missing ratings and those with complete ratings could reasonably occur by random chance.
+
+
 ## Hypothesis Testing
 ## Framing a Prediction Problem
 ## Baseline Model
