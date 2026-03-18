@@ -120,7 +120,7 @@ The cleaned `merged` dataframe contains **83,782 rows** and **20 columns**. Belo
 
 I examined the distributions of key variables individually to understand their ranges, central tendencies, and patterns.
 
-**Distribution of Average Rating**
+- **Distribution of Average Rating**
 
 <iframe
   src="assets/avg_rating_histogram.html"
@@ -131,7 +131,7 @@ I examined the distributions of key variables individually to understand their r
 The distribution of average ratings is heavily left-skewed, with the vast majority of recipes receiving ratings between 4.5 and 5 stars. This indicates that users tend to rate recipes positively overall, with 44,076 recipes falling in the highest rating bin, making it challenging to distinguish between truly exceptional recipes and merely good ones.
 
 
-**Distribution of Cooking Time**
+- **Distribution of Cooking Time**
 
 Since approximately 12.3% of recipes have cooking times exceeding 100 minutes (which could skew the visualization), I filtered to show only recipes with cooking times under 100 minutes for a clearer view of the typical preparation time range.
 
@@ -144,7 +144,7 @@ Since approximately 12.3% of recipes have cooking times exceeding 100 minutes (w
 The box plot reveals that the median cooking time is around 35 minutes, with the interquartile range (IQR) spanning from approximately 20 to 50 minutes. The presence of numerous outliers beyond the upper whisker indicates that while most recipes are relatively quick to prepare, there exists a substantial number of more time-intensive recipes that could appeal to users looking for weekend projects or special occasion meals.
 
 
-**Distribution of Calories**
+- **Distribution of Calories**
 
 <iframe
   src="assets/calories_histogram.html"
@@ -168,6 +168,8 @@ This pivot table displays the percentage distribution of ratings across differen
 | 800-1000 | 2.34% | 6.49% | 2.87% | 16.61% | 8.83% | 62.85% |
 | 1000-1500 | 2.86% | 6.29% | 3.31% | 17.51% | 9.23% | 60.80% |
 | 1500-2000 | 3.27% | 6.42% | 3.87% | 18.52% | 8.47% | 59.44% |
+
+
 
 ## Assessment of Missingness
 ## Hypothesis Testing
