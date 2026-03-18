@@ -127,8 +127,7 @@ I examined the distributions of key variables individually to understand their r
   width="800"
   height="600"
   frameborder="0"
-></iframe>
-The distribution of average ratings is heavily left-skewed, with the vast majority of recipes receiving ratings between 4.5 and 5 stars. This indicates that users tend to rate recipes positively overall, with 44,076 recipes falling in the highest rating bin, making it challenging to distinguish between truly exceptional recipes and merely good ones.
+></iframe>The distribution of average ratings is heavily left-skewed, with the vast majority of recipes receiving ratings between 4.5 and 5 stars. This indicates that users tend to rate recipes positively overall, with 44,076 recipes falling in the highest rating bin, making it challenging to distinguish between truly exceptional recipes and merely good ones.
 
 
 - **Distribution of Cooking Time**
@@ -140,8 +139,7 @@ Since approximately 12.3% of recipes have cooking times exceeding 100 minutes (w
   width="800"
   height="600"
   frameborder="0"
-></iframe>
-The box plot reveals that the median cooking time is around 35 minutes, with the interquartile range (IQR) spanning from approximately 20 to 50 minutes. The presence of numerous outliers beyond the upper whisker indicates that while most recipes are relatively quick to prepare, there exists a substantial number of more time-intensive recipes that could appeal to users looking for weekend projects or special occasion meals.
+></iframe>The box plot reveals that the median cooking time is around 35 minutes, with the interquartile range (IQR) spanning from approximately 20 to 50 minutes. The presence of numerous outliers beyond the upper whisker indicates that while most recipes are relatively quick to prepare, there exists a substantial number of more time-intensive recipes that could appeal to users looking for weekend projects or special occasion meals.
 
 
 - **Distribution of Calories**
@@ -151,9 +149,7 @@ The box plot reveals that the median cooking time is around 35 minutes, with the
   width="800"
   height="600"
   frameborder="0"
-></iframe>
-
-The calorie distribution is right-skewed, with most recipes clustering in the lower to moderate calorie ranges. This suggests that the platform caters primarily to everyday cooking needs, though the long tail of higher-calorie recipes likely represents indulgent desserts and rich main courses that users prepare for special occasions.
+></iframe>The calorie distribution is right-skewed, with most recipes clustering in the lower to moderate calorie ranges. This suggests that the platform caters primarily to everyday cooking needs, though the long tail of higher-calorie recipes likely represents indulgent desserts and rich main courses that users prepare for special occasions.
 
 ### Interesting Aggregates: Percentage of Recipes by Calorie Group and Rating Category
 
