@@ -120,7 +120,7 @@ The cleaned `merged` dataframe contains **83,782 rows** and **20 columns**. Belo
 
 I examined the distributions of key variables individually to understand their ranges, central tendencies, and patterns.
 
-- **Distribution of Average Rating**
+### Distribution of Average Rating**
 The distribution of average ratings is heavily left-skewed, with the vast majority of recipes receiving ratings between 4.5 and 5 stars. This indicates that users tend to rate recipes positively overall, with 44,076 recipes falling in the highest rating bin, making it challenging to distinguish between truly exceptional recipes and merely good ones.
 
 <iframe
@@ -128,12 +128,10 @@ The distribution of average ratings is heavily left-skewed, with the vast majori
   width="800"
   height="600"
   frameborder="0"
-  marginheight="0"
-  marginwidth="0"
 ></iframe>
 
 
-- **Distribution of Cooking Time**
+### Distribution of Cooking Time**
 
 Since approximately 12.3% of recipes have cooking times exceeding 100 minutes (which could skew the visualization), I filtered to show only recipes with cooking times under 100 minutes for a clearer view of the typical preparation time range.
 
@@ -148,7 +146,8 @@ The box plot reveals that the median cooking time is around 35 minutes, with the
   marginwidth="0"
 ></iframe>
 
-- **Distribution of Calories**
+### Distribution of Calories**
+
 The calorie distribution is right-skewed, with most recipes clustering in the lower to moderate calorie ranges. This suggests that the platform caters primarily to everyday cooking needs, though the long tail of higher-calorie recipes likely represents indulgent desserts and rich main courses that users prepare for special occasions.
 <iframe
   src="assets/calories_histogram.html"
