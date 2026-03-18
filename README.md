@@ -6,7 +6,7 @@ This data science project, conducted at UCSD, focus on exploring the relationshi
 
 ## Introduction
 
-Food is a critical part of our daily lives, and in our fast-paced world, time has become one of our most valuable commodities. Home cooks constantly weigh the trade-off between investing more time in preparation for potentially better results and opting for quick recipes that fit their busy schedules. With this tension in mind, my project investigates the relationship between recipe ratings and the time required to prepare them. Specifically, I ask: **Do recipes with longer preparation times receive higher ratings, or do users prefer quicker recipes that deliver flavor efficiently?**
+Food is a critical part of our daily lives, and in our fast-paced world, time has become one of our most valuable commodities. Home cooks constantly weigh the trade-off between investing more time in preparation for potentially better results and opting for quick recipes that fit their busy schedules. With this tension in mind, my project investigates the relationship between recipe ratings and the time required to prepare them. Specifically, I ask: **Do recipes with longer preparation times(> 60 minutes) receive higher ratings, or do users prefer quicker recipes(<= 30 minutes) that deliver flavor efficiently?**
 
 To explore this question, I analyze two datasets from [food.com](https://www.food.com/recipe/chickpea-and-fresh-tomato-toss-51631), which contain recipe information and user interactions since 2008.
 
@@ -50,76 +50,80 @@ To answer my research question, I focus on the following columns:
 **Given the datasets, I am investigating whether there is a meaningful relationship between cooking time and how users rate recipes**. Understanding the relationship between cooking time and user ratings provides insight into what people value in recipes. These insights can help contributors tailor recipes to match user preferences—whether that means creating elaborate, time-intensive dishes or optimizing recipes for efficiency. Furthermore, these findings could inform recommendation systems that better align with users’ time constraints and cooking habits, making meal planning easier for busy home cooks.
 
 
-
-
-
-
 ## Data Cleaning and Exploratory Data Analysis
 
+To prepare the datasets for analyzing the relationship between cooking time and recipe ratings, I performed several data cleaning steps. These steps address inconsistencies and structural issues that arise from how data is generated on Food.com—where users independently submit recipes and provide ratings, leading to duplication, missing values, and formatting challenges.
 
-To prepare the datasets for investigating the relationship between cooking time and recipe ratings, I performed several cleaning steps to ensure the data was properly formatted and ready for analysis. These steps address issues arising from how the original data was collected and stored on Food.com.
+### 1. Aggregate ratings and merge datasets
 
-**1. Calculate average ratings and merge dataframes**
+The `interactions` dataset contains multiple ratings per recipe, since different users can review the same recipe. Because my analysis focuses on overall recipe quality, I aggregated the `rating` column by `recipe_id` to compute an average rating for each recipe.
 
-The `interactions` dataset contains multiple ratings from different users for the same recipe, as users on Food.com can rate recipes they've tried. To understand overall recipe quality, I first calculated the average rating for each recipe using the `rating` column from the interactions data. I then merged this aggregated data with the main `recipes` dataframe on `recipe_id` (matched to `id`), creating a new `avg_rating` column. This merge combines recipe characteristics—most importantly cooking time (`minutes`)—with their collective user feedback, enabling analysis of how preparation time relates to recipe popularity.
+I then merged this aggregated table with the `raw_recipes` dataset by matching `recipe_id` (from `interactions`) with `id` (from `raw_recipes`). This produced a unified dataframe containing both recipe attributes (e.g., `minutes`) and user feedback (`avg_rating`). This step is essential because the original datasets separate recipe metadata from user evaluations.
 
-**2. Replace rating 0.0 with NaN**
+### 2. Handle invalid ratings (0.0 → NaN)
 
-During inspection of the `avg_rating` column, I discovered values of 0.0. Food.com's rating system typically uses a 1-5 star scale, where 1 star is the lowest possible rating. A value of 0.0 likely represents missing data or recipes with no ratings rather than genuine user feedback. These zeros would artificially deflate average ratings and skew my analysis of how cooking time affects ratings. I replaced all 0.0 values with NaN to exclude them from calculations, ensuring that only recipes with actual user ratings contribute to my findings.
+While inspecting the `avg_rating` column, I observed values equal to 0.0. Since Food.com uses a 1–5 rating scale, a value of 0.0 does not represent a valid rating and likely indicates missing data or recipes with no reviews.
 
-**3. Convert the nutrition column from string to list**
+To prevent these values from biasing the analysis, I replaced all 0.0 entries with `NaN`. This ensures that only recipes with actual user feedback are included when analyzing the relationship between cooking time and ratings.
 
-The `nutrition` column in the raw dataset was stored as a string representation of a list (e.g., `"[138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]"`). This format likely resulted from how the data was exported for the research paper. While my primary focus is on cooking time, I extracted these nutritional components to use as potential confounding variables—for example, longer cooking times might correlate with higher calorie recipes, which could independently influence ratings.
+### 3. Convert `nutrition` from string to list
 
-**4. Split nutrition list into individual columns**
+The `nutrition` column was originally stored as a string representation of a list (e.g., `"[138.4, 10.0, 50.0, ...]"`). This format likely resulted from how the dataset was exported.
 
-Once converted to lists, I extracted each nutritional component and created separate columns. Based on the dataset documentation, the nutrition list follows this order:
-- Position 0: calories (#)
-- Position 1: total fat (PDV)
-- Position 2: sugar (PDV)
-- Position 3: sodium (PDV)
-- Position 4: protein (PDV)
-- Position 5: saturated fat (PDV)
-- Position 6: carbohydrates (PDV)
+I converted these strings into actual Python lists so that the individual nutritional components could be accessed programmatically. Although nutrition is not my primary variable of interest, it may act as a confounder (e.g., more complex or higher-calorie recipes might take longer and also receive different ratings).
 
-I created seven new float columns: `calories`, `total fat`, `sugar`, `sodium`, `protein`, `saturated fat`, and `carbohydrates`. These allow me to control for nutritional factors when examining the pure relationship between cooking time and ratings.
+### 4. Extract nutrition into separate columns
 
-**5. Convert `submitted` column to datetime**
+After converting the `nutrition` column, I split it into seven separate numeric columns based on the documented order:
 
-The `submitted` column, which records when each recipe was posted to Food.com, was initially stored as object/string type. I converted this column to datetime format using `pd.to_datetime()` to enable potential analysis of whether preferences for cooking time have shifted over the 2008-2018 timeframe—for instance, whether busy modern lifestyles have made users prefer quicker recipes in recent years.
+- `calories`
+- `total fat`
+- `sugar`
+- `sodium`
+- `protein`
+- `saturated fat`
+- `carbohydrates`
 
-**6. Examine cooking time distribution and handle outliers**
+This transformation improves interpretability and enables potential future analysis controlling for nutritional factors.
 
-Since cooking time (`minutes`) is the central variable in my analysis, I examined its distribution. The column contains some extreme outliers (e.g., recipes claiming to take thousands of minutes) that likely represent data entry errors. For my main analysis, I will consider filtering to reasonable cooking times, but I preserved all values in the cleaned dataframe for transparency.
+### 5. Convert `submitted` to datetime
 
-**7. Verify final dataframe structure**
+The `submitted` column was initially stored as a string. I converted it to a datetime format using `pd.to_datetime()`.
 
-After completing all cleaning steps, I examined the final dataframe to confirm successful transformations:
+This allows for potential temporal analysis, such as examining whether user preferences for cooking time have changed over time—an important consideration given evolving lifestyles and cooking habits.
+
+### 6. Final dataset verification
+
+After cleaning, I verified the structure and data types of the final merged dataframe:
 
 | Column | Type |
 |--------|------|
-| 'name' | object |
-| 'id' | int64 |
-| 'minutes' | int64 |
-| 'contributor_id' | int64 |
-| 'submitted' | datetime64[ns] |
-| 'tags' | object |
-| 'nutrition' | object |
-| 'n_steps' | int64 |
-| 'steps' | object |
-| 'description' | object |
-| 'ingredients' | object |
-| 'n_ingredients' | int64 |
-| 'avg_rating' | float64 |
-| 'calories' | float64 |
-| 'total fat' | float64 |
-| 'sugar' | float64 |
-| 'sodium' | float64 |
-| 'protein' | float64 |
-| 'saturated fat' | float64 |
-| 'carbohydrates' | float64 |
+| `name` | object |
+| `id` | int64 |
+| `minutes` | int64 |
+| `contributor_id` | int64 |
+| `submitted` | datetime64[ns] |
+| `tags` | object |
+| `nutrition` | object |
+| `n_steps` | int64 |
+| `steps` | object |
+| `description` | object |
+| `ingredients` | object |
+| `n_ingredients` | int64 |
+| `avg_rating` | float64 |
+| `calories` | float64 |
+| `total fat` | float64 |
+| `sugar` | float64 |
+| `sodium` | float64 |
+| `protein` | float64 |
+| `saturated fat` | float64 |
+| `carbohydrates` | float64 |
 
-The cleaned `merged` dataframe contains **83,782 rows** and **20 columns**. Below are the first 5 rows, highlighting the most relevant columns for my investigation of cooking time and recipe ratings. Scroll right to view all columns.
+The cleaned `merged` dataframe contains **83,782 rows** and **20 columns**.
+
+### Preview of cleaned data
+
+Below are the first five rows of the cleaned dataset, showing the most relevant variables for this analysis:
 
 | name | id | minutes | contributor_id | submitted | n_steps | n_ingredients | avg_rating | calories | total fat | sugar | sodium | protein | saturated fat | carbohydrates |
 |------|-----|---------|----------------|-----------|---------|---------------|------------|----------|-----------|-------|--------|---------|----------------|---------------|
@@ -128,7 +132,6 @@ The cleaned `merged` dataframe contains **83,782 rows** and **20 columns**. Belo
 | 412 broccoli casserole | 306168 | 40 | 50969 | 2008-05-30 | 6 | 9 | 5.0 | 194.8 | 20 | 6 | 32 | 22 | 36 | 3 |
 | millionaire pound cake | 286009 | 120 | 461724 | 2008-02-12 | 7 | 7 | 5.0 | 878.3 | 63 | 326 | 13 | 20 | 123 | 39 |
 | 2000 meatloaf | 475785 | 90 | 2202916 | 2012-03-06 | 17 | 13 | 5.0 | 267.0 | 30 | 12 | 12 | 29 | 48 | 2 |
-
 
 ### Univariate Analysis
 
