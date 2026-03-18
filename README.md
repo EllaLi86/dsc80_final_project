@@ -128,6 +128,8 @@ The distribution of average ratings is heavily left-skewed, with the vast majori
   width="800"
   height="600"
   frameborder="0"
+  marginheight="0"
+  marginwidth="0"
 ></iframe>
 
 
@@ -142,15 +144,19 @@ The box plot reveals that the median cooking time is around 35 minutes, with the
   width="800"
   height="600"
   frameborder="0"
+  marginheight="0"
+  marginwidth="0"
 ></iframe>
 
-- ** Distribution of Calories**
+- **Distribution of Calories**
 The calorie distribution is right-skewed, with most recipes clustering in the lower to moderate calorie ranges. This suggests that the platform caters primarily to everyday cooking needs, though the long tail of higher-calorie recipes likely represents indulgent desserts and rich main courses that users prepare for special occasions.
 <iframe
   src="assets/calories_histogram.html"
   width="800"
   height="600"
   frameborder="0"
+  marginheight="0"
+  marginwidth="0"
 ></iframe>
 
 
