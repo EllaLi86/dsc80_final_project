@@ -148,6 +148,7 @@ I explored relationships between pairs of variables to identify potential patter
 *Describe what you observe—is there a relationship between sugar and ratings? Do sugary recipes get penalized or rewarded by users?*
 
 **Pivot Table: Relationship Between Calories and Average Rating**
+| calorie_group   |   Very Poor (0-2) |   Poor (2-3) |   Fair (3-3.5) |   Good (3.5-4) |   Very Good (4-4.5) |   Excellent (4.5-5) |\n|:----------------|------------------:|-------------:|---------------:|---------------:|--------------------:|--------------------:|\n| <200            |           2.34036 |      5.52115 |        2.69825 |        16.2297 |             9.4499  |             63.7607 |\n| 200-400         |           2.256   |      5.66929 |        2.65153 |        17.0262 |             9.98352 |             62.4135 |\n| 400-600         |           2.3492  |      5.86284 |        2.40336 |        17.8458 |             9.85715 |             61.6817 |\n| 600-800         |           2.18121 |      6.34533 |        2.71507 |        17.9378 |             9.50275 |             61.3179 |\n| 800-1000        |           2.34015 |      6.49308 |        2.8675  |        16.6117 |             8.83322 |             62.8543 |\n| 1000-1500       |           2.85596 |      6.29139 |        3.31126 |        17.5083 |             9.23013 |             60.803  |\n| 1500-2000       |           3.26877 |      6.41646 |        3.87409 |        18.523  |             8.47458 |             59.4431 |
 
 <iframe
   src="assets/calories_rating.html"
