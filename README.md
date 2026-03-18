@@ -120,17 +120,22 @@ The cleaned `merged` dataframe contains **83,782 rows** and **20 columns**. Belo
 
 I examined the distributions of key variables individually to understand their ranges, central tendencies, and patterns.
 
-- **Distribution of Average Rating**
+---
+
+**Distribution of Average Rating**
 
 <iframe
   src="assets/avg_rating_histogram.html"
   width="800"
   height="600"
   frameborder="0"
-></iframe>The distribution of average ratings is heavily left-skewed, with the vast majority of recipes receiving ratings between 4.5 and 5 stars. This indicates that users tend to rate recipes positively overall, with 44,076 recipes falling in the highest rating bin, making it challenging to distinguish between truly exceptional recipes and merely good ones.
+></iframe>
 
+The distribution of average ratings is heavily left-skewed, with the vast majority of recipes receiving ratings between 4.5 and 5 stars. This indicates that users tend to rate recipes positively overall, with 44,076 recipes falling in the highest rating bin, making it challenging to distinguish between truly exceptional recipes and merely good ones.
 
-- **Distribution of Cooking Time**
+---
+
+**Distribution of Cooking Time**
 
 Since approximately 12.3% of recipes have cooking times exceeding 100 minutes (which could skew the visualization), I filtered to show only recipes with cooking times under 100 minutes for a clearer view of the typical preparation time range.
 
@@ -139,23 +144,29 @@ Since approximately 12.3% of recipes have cooking times exceeding 100 minutes (w
   width="800"
   height="600"
   frameborder="0"
-></iframe>The box plot reveals that the median cooking time is around 35 minutes, with the interquartile range (IQR) spanning from approximately 20 to 50 minutes. The presence of numerous outliers beyond the upper whisker indicates that while most recipes are relatively quick to prepare, there exists a substantial number of more time-intensive recipes that could appeal to users looking for weekend projects or special occasion meals.
+></iframe>
 
+The box plot reveals that the median cooking time is around 35 minutes, with the interquartile range (IQR) spanning from approximately 20 to 50 minutes. The presence of numerous outliers beyond the upper whisker indicates that while most recipes are relatively quick to prepare, there exists a substantial number of more time-intensive recipes that could appeal to users looking for weekend projects or special occasion meals.
 
-- **Distribution of Calories**
+---
+
+**Distribution of Calories**
 
 <iframe
   src="assets/calories_histogram.html"
   width="800"
   height="600"
   frameborder="0"
-></iframe>The calorie distribution is right-skewed, with most recipes clustering in the lower to moderate calorie ranges. This suggests that the platform caters primarily to everyday cooking needs, though the long tail of higher-calorie recipes likely represents indulgent desserts and rich main courses that users prepare for special occasions.
+></iframe>
+
+The calorie distribution is right-skewed, with most recipes clustering in the lower to moderate calorie ranges. This suggests that the platform caters primarily to everyday cooking needs, though the long tail of higher-calorie recipes likely represents indulgent desserts and rich main courses that users prepare for special occasions.
+
 
 ### Interesting Aggregates: Percentage of Recipes by Calorie Group and Rating Category
 
 This pivot table displays the percentage distribution of ratings across different calorie groups. Each row represents a calorie range, and each column shows what proportion of recipes in that calorie range received ratings in each category. The percentages in each row sum to 100%.
 
-| Calorie Group | Very Poor (0-2) | Poor (2-3) | Fair (3-3.5) | Good (3.5-4) | Very Good (4-4.5) | Excellent (4.5-5) |
+| Calorie Group | Very Poor (0-2) | Poor (2-3) | Fair  (3-3.5) | Good (3.5-4) | Very Good (4-4.5) | Excellent (4.5-5) |
 |---------------|-----------------|------------|--------------|--------------|-------------------|-------------------|
 | <200 | 2.34% | 5.52% | 2.70% | 16.23% | 9.45% | 63.76% |
 | 200-400 | 2.26% | 5.67% | 2.65% | 17.03% | 9.98% | 62.41% |
