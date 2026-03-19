@@ -286,35 +286,34 @@ Overall, these results suggest that the missingness of `avg_rating` depends on c
 ## Hypothesis Testing
 **Research Question:** Do quick recipes (≤ 30 minutes) receive higher average ratings than slow recipes (> 60 minutes)?
 
-### Hypotheses
-
 - **Null Hypothesis (H₀):** There is no difference in average ratings between quick and slow recipes.  
 - **Alternative Hypothesis (H₁):** Quick recipes have higher average ratings than slow recipes.
 
-### Test Design
+### Justification and Test Design
 
-- **Test Statistic:** Difference in mean average rating between quick recipes and slow recipes:  
-\[
-\text{Observed Difference} = \text{mean(avg\_rating of quick recipes)} - \text{mean(avg\_rating of slow recipes)}
-\]  
-- **Permutation Test:** I used a permutation test to simulate the null distribution of the test statistic. This is appropriate because it does not assume a specific distribution of ratings and accounts for potential non-normality in the data.  
-- **Significance Level:** α = 0.05
+This hypothesis test is well-suited for addressing the research question—whether cooking time influences recipe ratings—because it directly compares the average ratings of two clearly defined groups: quick recipes (≤ 30 minutes) and slow recipes (> 60 minutes). By focusing on these extremes, the test isolates the effect of cooking duration on perceived recipe quality.
+
+- **Test Statistic:** The difference in mean average rating between quick recipes and slow recipes. This is a natural and intuitive measure for evaluating whether cooking time affects user ratings.  
+- **Permutation Test:** I used a permutation test to simulate the null distribution of the test statistic. This approach is particularly appropriate because:
+  1. It **does not assume normality** of ratings, which is important since ratings are bounded (1–5) and heavily skewed toward higher values.  
+  2. It **accounts for the exact observed data** by randomly reassigning recipe labels, making the test robust to the actual distribution of ratings.  
+  3. It directly evaluates the **difference in means**, aligning closely with the research question.  
+
+- **Significance Level:** α = 0.05  
+
+I performed a permutation test with 5000 simulations in order to generate an empirical distribution of the test statisic under the null hypothesis. The plot below shows the observed difference against the empirical distribution of differences from the permutation tests.
+
 <iframe
   src="assets/hypothesis_test.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
+
 ### Results
-
 - **Observed Difference:** 0.0782  
-- **P-value:** 0.0  
-
+- **P-value:** 0.0 
 Since the p-value is less than 0.05, I **reject the null hypothesis**. This provides evidence that, in this dataset, quick recipes tend to have slightly higher average ratings than slow recipes.  
-
-### Interpretation
-
-While the observed difference is statistically significant, the magnitude (≈0.08 stars on a 5-star scale) is small. Therefore, although quick recipes are rated slightly higher on average, the practical difference is modest. This finding aligns with the research question but should not be interpreted as an absolute truth—ratings may vary for reasons outside of cooking time, and this is an observational dataset rather than a randomized experiment.
 
 
 ## Framing a Prediction Problem
