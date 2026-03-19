@@ -302,12 +302,8 @@ This hypothesis test is well-suited for addressing the research question—wheth
 - **Significance Level:** α = 0.05  
 
 I performed a permutation test with 5000 simulations in order to generate an empirical distribution of the test statistic under the null hypothesis. The plot below shows the observed difference against the empirical distribution of differences from the permutation tests.
-<iframe
-  src="assets/hypothesis_test.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>### Conclusion
+<iframe src="assets/hypothesis_test.html" width="800" height="600" frameborder="0"></iframe>
+### Conclusion
 - **Observed Difference:** 0.0782  
 - **P-value:** 0.0
 
@@ -342,4 +338,13 @@ Overall, this regression setup and the RMSE metric allow me to **leverage recipe
 ## Baseline Model
 ## Final Model
 ## Fairness Analysis
+
+
+## Cleaning and EDA
+
+<iframe src="assets/hypothesis_test.html" width=800 height=600 frameBorder=0></iframe>
+
+---
+
+## Assessment of Missingness
 
