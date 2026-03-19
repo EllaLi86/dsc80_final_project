@@ -154,7 +154,7 @@ This histogram  below shows the frequency distribution of recipe cooking times. 
 <iframe
   src="assets/cooking_time_distribution.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 Because approximately 6% of recipes have cooking times exceeding 200 minutes (which can skew visualization), I restricted this plot to recipes under 200 minutes to better capture typical cooking behavior.
@@ -163,7 +163,7 @@ The box plot shows a median cooking time of about 35 minutes, with an interquart
 <iframe
   src="assets/cooking_time_boxplot.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -340,7 +340,60 @@ Since this is a regression problem, **Root Mean Squared Error (RMSE)** is used a
 - It is in the **same units as the target variable (minutes)**, making it interpretable for practical use.  
 
 Overall, this regression setup and the RMSE metric allow me to **leverage recipe features to make actionable and interpretable predictions about cooking time**, providing practical value to users and recipe platforms.
+
+
 ## Baseline Model
+
+### Model Description
+
+I built a **Random Forest Regressor** to predict cooking time (`minutes`) for recipes. Random forests are flexible, non-linear models that can capture complex relationships between features without assuming a specific functional form.
+
+To reduce the influence of extreme outliers, I restricted the dataset to recipes with cooking times between 0 and 300 minutes. Extremely large cooking times may represent data entry errors or atypical recipes, and filtering them helps the model focus on realistic cooking scenarios.
+
+### Features Used
+
+The model uses the following **quantitative features**:
+
+| Feature | Type | Description |
+|--------|------|-------------|
+| `n_steps` | Quantitative | Number of steps in the recipe |
+| `n_ingredients` | Quantitative | Number of ingredients |
+| `calories` | Quantitative | Total calories |
+| `total fat` | Quantitative | Total fat content |
+| `sugar` | Quantitative | Sugar content |
+| `sodium` | Quantitative | Sodium content |
+| `protein` | Quantitative | Protein content |
+| `saturated fat` | Quantitative | Saturated fat content |
+| `carbohydrates` | Quantitative | Carbohydrate content |
+
+All features are numeric, so no encoding was required.
+
+### Preprocessing
+
+I applied **standardization** using `StandardScaler` to scale the features before training. While tree-based models like Random Forests do not strictly require scaling, this ensures consistency and allows for easier comparison with future models.
+
+### Train-Test Split
+
+The dataset was split into:
+- **Training set:** 75%  
+- **Test set:** 25%  
+
+This ensures that performance is evaluated on unseen data to assess generalization.
+
+### Model Performance
+
+- **Test RMSE:** 42.47 minutes  
+- **Test R²:** 0.1228  
+
+### Evaluation
+
+The model provides a **baseline estimate** of cooking time using only quantitative recipe features. An RMSE of about 42 minutes indicates the typical magnitude of prediction errors, and the R² value of 0.1228 shows that there is still substantial unexplained variability in cooking times.
+
+### Conclusion
+
+This baseline model establishes a starting point for predicting cooking time. While it captures some patterns, such as the effect of recipe complexity and nutritional content, further improvements could be achieved by adding richer features—such as text data from recipe titles, descriptions, or step instructions—to better capture factors influencing preparation time.
+
+
 ## Final Model
 ## Fairness Analysis
 
