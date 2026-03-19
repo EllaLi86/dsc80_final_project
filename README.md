@@ -180,9 +180,6 @@ This side-by-side box plot compares average ratings between quick recipes (cooki
   height="600"
   frameborder="0"
 ></iframe>
-
-### Interesting Aggregates: Percentage of Recipes by Calorie Group and Rating Category
-
 ### Interesting Aggregates: Percentage of Recipes by Calorie Group and Rating Category
 
 To further explore factors that may influence recipe ratings, I constructed a pivot table showing the percentage distribution of rating categories within each calorie group. Each row represents a calorie range, and each column indicates the proportion of recipes in that group that fall into a specific rating category. Percentages within each row sum to 100%.
