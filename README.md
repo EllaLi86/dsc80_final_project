@@ -206,10 +206,13 @@ Overall, this suggests that calorie content does not strongly influence recipe r
 ></iframe>
 ## Assessment of Missingness
 
-Three columns in the merged dataset have missing values: 'name', 'description', and 'avg_rating'. 
+Three columns in the merged dataset contain missing values: `name`, `description`, and `avg_rating`.
 
-### NMAR Analysis
-I believe that the 70 missingness of the **'description'** column is **NMAR** (Not Missing at Random). If people feel indifferent about a recipe, they are less likely to leave a review since they would feel they have nothing significant to say. People usually leave a review only when they have stronger emotions toward the recipe—whether positive or negative. Their emotions motivate them to navigate to the page, click through multiple buttons, and take time out of their day to write. For example, someone who thoroughly enjoyed a recipe would be willing to do all the work to leave a positive review, while someone who had a terrible experience might be motivated to warn others. Those with neutral experiences, however, have no such motivation, making their reviews systematically missing.
+### MNAR Analysis
+
+I believe that the missingness in the `description` column is **MNAR (Missing Not At Random)**. On Food.com, providing a description is optional when users submit recipes, and whether a description is included likely depends on unobserved factors such as the contributor’s level of effort, enthusiasm, or perceived quality of the recipe. For example, users who are particularly proud of their recipes or believe they are unique may be more likely to include a detailed description, while users submitting simpler or less noteworthy recipes may choose to leave the description blank. Since these motivations are not captured in the dataset, the probability that `description` is missing depends on the value itself, which is the defining characteristic of MNAR.
+
+To better understand and potentially explain this missingness (and make it MAR instead), additional data would be helpful. For instance, information about contributor behavior—such as their past activity level, number of submitted recipes, or engagement metrics—could help explain why some users include descriptions while others do not. If such variables were available, the missingness in `description` could potentially be modeled as dependent on observed data rather than unobserved factors.
 
 ### Missingness Dependency
 Now I examine the missingness of `avg_rating` in the merged DataFrame by testing the dependency of its missingness.
