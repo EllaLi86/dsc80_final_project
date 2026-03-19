@@ -302,15 +302,13 @@ This hypothesis test is well-suited for addressing the research question—wheth
 - **Significance Level:** α = 0.05  
 
 I performed a permutation test with 5000 simulations in order to generate an empirical distribution of the test statistic under the null hypothesis. The plot below shows the observed difference against the empirical distribution of differences from the permutation tests.
-
 <iframe
   src="assets/hypothesis_test.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
-
-# Conclusion
+### Conclusion
 - **Observed Difference:** 0.0782  
 - **P-value:** 0.0
 
@@ -318,6 +316,30 @@ Since the p-value is less than 0.05, I **reject the null hypothesis**. This prov
 
 
 ## Framing a Prediction Problem
+### Prediction Problem
+The goal of this step is to **predict the cooking time of a recipe** based on its characteristics.
+
+- **Target Variable:** `minutes` (total time to prepare the recipe)  
+- **Prediction Type:** Regression, since the target variable is continuous.  
+
+### Practical Value
+Predicting cooking time has several real-world applications:  
+1. Meal planners can estimate how long new recipes will take.  
+2. Home cooks can filter recipes to fit their schedules.  
+3. Meal kit or recipe services can provide more accurate preparation estimates to improve user experience.  
+
+### Feature Considerations
+To make accurate predictions, I will use features that would be known **at the time a recipe is submitted or displayed**, avoiding any post-submission data like final ratings:  
+- **Recipe complexity:** Number of steps (`n_steps`) and number of ingredients (`n_ingredients`). More complex recipes tend to take longer.  
+- **Nutritional content:** Calories, fat, protein, and other nutrition features. Complex, high-calorie recipes often require more preparation.  
+- **Text features:** Recipe names, descriptions, and step instructions. For example, keywords like “slow-cooked” or “overnight” may indicate longer cooking times.  
+
+### Evaluation Metric
+Since this is a regression problem, **Root Mean Squared Error (RMSE)** is used as the primary evaluation metric. RMSE is suitable because:  
+- It **penalizes larger errors more heavily**, which is important when underestimating or overestimating cooking time could impact planning.  
+- It is in the **same units as the target variable (minutes)**, making it interpretable for practical use.  
+
+Overall, this regression setup and the RMSE metric allow me to **leverage recipe features to make actionable and interpretable predictions about cooking time**, providing practical value to users and recipe platforms.
 ## Baseline Model
 ## Final Model
 ## Fairness Analysis
