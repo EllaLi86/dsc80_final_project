@@ -234,7 +234,6 @@ I first investigate whether the missingness of `avg_rating` depends on cooking t
   frameborder="0"
 ></iframe>
 
-The plot shows that recipes with missing ratings tend to have higher cooking times compared to those with observed ratings.
 
 <iframe
   src="assets/rating_missing_time_permutation.html"
@@ -267,7 +266,6 @@ Next, I test whether the missingness of `avg_rating` depends on protein content.
   frameborder="0"
 ></iframe>
 
-The distributions of protein content for recipes with and without ratings appear similar, with no clear separation between the groups.
 
 <iframe
   src="assets/rating_missing_protein_permutation.html"
