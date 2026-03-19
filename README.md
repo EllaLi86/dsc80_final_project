@@ -265,8 +265,6 @@ Next, I test whether the missingness of `avg_rating` depends on protein content.
   height="600"
   frameborder="0"
 ></iframe>
-
-
 <iframe
   src="assets/rating_missing_protein_permutation.html"
   width="800"
@@ -286,6 +284,39 @@ Overall, these results suggest that the missingness of `avg_rating` depends on c
 
 
 ## Hypothesis Testing
+**Research Question:** Do quick recipes (≤ 30 minutes) receive higher average ratings than slow recipes (> 60 minutes)?
+
+### Hypotheses
+
+- **Null Hypothesis (H₀):** There is no difference in average ratings between quick and slow recipes.  
+- **Alternative Hypothesis (H₁):** Quick recipes have higher average ratings than slow recipes.
+
+### Test Design
+
+- **Test Statistic:** Difference in mean average rating between quick recipes and slow recipes:  
+\[
+\text{Observed Difference} = \text{mean(avg\_rating of quick recipes)} - \text{mean(avg\_rating of slow recipes)}
+\]  
+- **Permutation Test:** I used a permutation test to simulate the null distribution of the test statistic. This is appropriate because it does not assume a specific distribution of ratings and accounts for potential non-normality in the data.  
+- **Significance Level:** α = 0.05
+<iframe
+  src="assets/hypothesis_test.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+### Results
+
+- **Observed Difference:** 0.0782  
+- **P-value:** 0.0  
+
+Since the p-value is less than 0.05, I **reject the null hypothesis**. This provides evidence that, in this dataset, quick recipes tend to have slightly higher average ratings than slow recipes.  
+
+### Interpretation
+
+While the observed difference is statistically significant, the magnitude (≈0.08 stars on a 5-star scale) is small. Therefore, although quick recipes are rated slightly higher on average, the practical difference is modest. This finding aligns with the research question but should not be interpreted as an absolute truth—ratings may vary for reasons outside of cooking time, and this is an observational dataset rather than a randomized experiment.
+
+
 ## Framing a Prediction Problem
 ## Baseline Model
 ## Final Model
