@@ -313,6 +313,7 @@ I performed a permutation test with 5000 simulations in order to generate an emp
 ### Results
 - **Observed Difference:** 0.0782  
 - **P-value:** 0.0 
+
 Since the p-value is less than 0.05, I **reject the null hypothesis**. This provides evidence that, in this dataset, quick recipes tend to have slightly higher average ratings than slow recipes.  
 
 
