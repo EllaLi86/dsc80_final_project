@@ -144,7 +144,7 @@ The distribution of average ratings is heavily left-skewed, with the vast majori
 <iframe
   src="assets/avg_rating_histogram.html"
   width="800"
-  height="520"
+  height="500"
   frameborder="0"
 ></iframe>
 
@@ -154,7 +154,7 @@ This histogram  below shows the frequency distribution of recipe cooking times. 
 <iframe
   src="assets/cooking_time_distribution.html"
   width="800"
-  height="520"
+  height="500"
   frameborder="0"
 ></iframe>
 Because approximately 6% of recipes have cooking times exceeding 200 minutes (which can skew visualization), I restricted this plot to recipes under 200 minutes to better capture typical cooking behavior.
@@ -163,7 +163,7 @@ The box plot shows a median cooking time of about 35 minutes, with an interquart
 <iframe
   src="assets/cooking_time_boxplot.html"
   width="800"
-  height="520"
+  height="500"
   frameborder="0"
 ></iframe>
 
@@ -177,7 +177,7 @@ This side-by-side box plot compares average ratings between quick recipes (cooki
 <iframe
   src="assets/minutes_vs_rating.html"
   width="800"
-  height="520"
+  height="500"
   frameborder="0"
 ></iframe>
 ### Interesting Aggregates: Percentage of Recipes by Calorie Group and Rating Category
@@ -201,7 +201,7 @@ Overall, this suggests that calorie content does not strongly influence recipe r
 <iframe
   src="assets/calories_vs_rating.html"
   width="800"
-  height="520"
+  height="500"
   frameborder="0"
 ></iframe>
 ## Assessment of Missingness
@@ -230,7 +230,7 @@ I first investigate whether the missingness of `avg_rating` depends on cooking t
 <iframe
   src="assets/rating_missing_time_distribution.html"
   width="800"
-  height="520"
+  height="500"
   frameborder="0"
 ></iframe>
 
@@ -238,7 +238,7 @@ I first investigate whether the missingness of `avg_rating` depends on cooking t
 <iframe
   src="assets/rating_missing_time_permutation.html"
   width="800"
-  height="520"
+  height="500"
   frameborder="0"
 ></iframe>
 
@@ -262,13 +262,13 @@ Next, I test whether the missingness of `avg_rating` depends on protein content.
 <iframe
   src="assets/rating_missing_protein_distribution.html"
   width="800"
-  height="520"
+  height="500"
   frameborder="0"
 ></iframe>
 <iframe
   src="assets/rating_missing_protein_permutation.html"
   width="800"
-  height="520"
+  height="500"
   frameborder="0"
 ></iframe>
 
@@ -305,7 +305,7 @@ I performed a permutation test with 5000 simulations in order to generate an emp
 <iframe 
 src="assets/hypothesis_test.html" 
 width="800" 
-height="520" 
+height="500" 
 frameborder="0" 
 ></iframe>
 ### Conclusion
