@@ -215,25 +215,27 @@ I believe that the missingness in the `description` column is **MNAR (Missing No
 To better understand and potentially explain this missingness (and make it MAR instead), additional data would be helpful. For instance, information about contributor behavior—such as their past activity level, number of submitted recipes, or engagement metrics—could help explain why some users include descriptions while others do not. If such variables were available, the missingness in `description` could potentially be modeled as dependent on observed data rather than unobserved factors.
 
 ### Missingness Dependency
-Now I examine the missingness of `avg_rating` in the merged DataFrame by testing the dependency of its missingness.
 
-**Cooking Time and Rating Missingness**
+I examine whether the missingness of `avg_rating` in the merged dataset depends on other observed variables.
 
-I am investigating whether the missingness in the `rating` column depends on the column `minutes`, which is the cooking time of the recipe.
+#### Cooking Time and Rating Missingness
 
-**Null Hypothesis:** The missingness of ratings does not depend on the cooking time (minutes) of the recipe.
+I first investigate whether the missingness of `avg_rating` depends on cooking time (`minutes`).
 
-**Alternate Hypothesis:** The missingness of ratings does depend on the cooking time (minutes) of the recipe.
+- **Null Hypothesis (H₀):** The missingness of `avg_rating` does not depend on cooking time.
+- **Alternative Hypothesis (H₁):** The missingness of `avg_rating` does depend on cooking time.
+- **Test Statistic:** Absolute difference in mean cooking time between recipes with missing vs. non-missing `avg_rating`.
+- **Significance Level:** 0.05
 
-**Test Statistic:** The absolute difference in mean cooking time between the group with missing ratings and the group without missing ratings.
-
-**Significance Level:** 0.05
 <iframe
   src="assets/rating_missing_time_distribution.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
+
+The plot shows that recipes with missing ratings tend to have higher cooking times compared to those with observed ratings.
+
 <iframe
   src="assets/rating_missing_time_permutation.html"
   width="800"
@@ -241,29 +243,32 @@ I am investigating whether the missingness in the `rating` column depends on the
   frameborder="0"
 ></iframe>
 
-**Results:** 
-- Observed Difference: 117.34 minutes
-- P-value: 0.041
+The permutation distribution represents the null distribution of the test statistic, with the observed difference marked.
 
-Since the p-value (0.041) is less than our significance level of 0.05, we **reject the null hypothesis**. This suggests that the missingness of ratings does depend on the cooking time of the recipe.
+**Results:**  
+- **Observed Difference:** 117.34 minutes  
+- **P-value:** 0.041  
 
-**Protein and Rating Missingness**
+Since the p-value (0.041) is less than 0.05, I **reject the null hypothesis**. This provides evidence that the missingness of `avg_rating` depends on cooking time. In particular, recipes that take longer to prepare are more likely to have missing ratings, possibly because users are less likely to try or review time-intensive recipes.
 
-I also investigated whether the missingness of ratings depends on the protein content of recipes. 
+#### Protein and Rating Missingness
 
-**Null Hypothesis:** The missingness of ratings does not depend on the protein amount of the recipe.
+Next, I test whether the missingness of `avg_rating` depends on protein content.
 
-**Alternate Hypothesis:** The missingness of ratings does depend on the protein amount of the recipe.
+- **Null Hypothesis (H₀):** The missingness of `avg_rating` does not depend on protein content.
+- **Alternative Hypothesis (H₁):** The missingness of `avg_rating` does depend on protein content.
+- **Test Statistic:** Absolute difference in mean protein between recipes with missing vs. non-missing `avg_rating`.
+- **Significance Level:** 0.05
 
-**Test Statistic:** The absolute difference in mean protein between the group with missing ratings and the group without missing ratings.
-
-**Significance Level:** 0.05
 <iframe
   src="assets/rating_missing_protein_distribution.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
+
+The distributions of protein content for recipes with and without ratings appear similar, with no clear separation between the groups.
+
 <iframe
   src="assets/rating_missing_protein_permutation.html"
   width="800"
@@ -271,13 +276,15 @@ I also investigated whether the missingness of ratings depends on the protein co
   frameborder="0"
 ></iframe>
 
-**Results:** 
-- Observed Difference: 1.2873110276228346
-- P-value: 0.183
+**Results:**  
+- **Observed Difference:** 1.29  
+- **P-value:** 0.183  
 
-The permutation test yielded a p-value of 0.183, which is greater than our significance level of 0.05. Therefore, we fail to reject the null hypothesis.
+Since the p-value (0.183) is greater than 0.05, I **fail to reject the null hypothesis**. This suggests that there is no strong evidence that missingness in `avg_rating` depends on protein content.
 
-This result provides insufficient statistical evidence to conclude that the missingness of ratings depends on the protein content of recipes. The observed difference in mean protein content between recipes with missing ratings and those with complete ratings could reasonably occur by random chance.
+#### Conclusion
+
+Overall, these results suggest that the missingness of `avg_rating` depends on cooking time but not on protein content. This indicates that the missingness mechanism is likely **MAR (Missing At Random)**, since it depends on an observed variable (`minutes`). This is important for my analysis, as it implies that ignoring missing ratings could introduce bias if cooking time is not properly accounted for.
 
 
 ## Hypothesis Testing
