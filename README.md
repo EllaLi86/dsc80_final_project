@@ -409,15 +409,16 @@ All features were standardized using `StandardScaler` to ensure consistent scali
 ### Train-Test Split
 - Training set: 75%  
 - Test set: 25%  
+
 Only recipes with cooking times between 0 and 90 minutes were included, excluding extreme outliers that could represent errors or unusual recipes. This results in **keeping X recipes**, which is roughly Y% of the dataset.
 
 ### Model and Hyperparameters
-I used a **Random Forest Regressor** with the following hyperparameters through **GridSearchCV**:
+I used a **Random Forest Regressor** with the following hyperparameters :
 
 - `n_estimators = 300` (number of trees)  
 - `max_depth = 10` (controls tree complexity)  
 
-These hyperparameters were chosen to balance flexibility and generalization, capturing non-linear relationships while reducing overfitting.
+These hyperparameters were chosen through **GridSearchCV** to balance flexibility and generalization, capturing non-linear relationships while reducing overfitting.
 
 ### Model Performance
 
@@ -443,5 +444,61 @@ Adding log-transformed nutrition features is expected to improve model performan
 The final model provides a **more accurate and robust prediction** of cooking time compared to simpler models. While a significant portion of the variation in cooking time remains unexplained, this model effectively captures meaningful patterns related to recipe structure and nutrition, providing a solid foundation for further refinement or incorporation of additional features such as text or tag-based information.
 
 ## Fairness Analysis
+
+To evaluate whether the final cooking time prediction model is fair, I compared its performance between **quick recipes** (≤ 60 minutes) and **slow recipes** (> 60 minutes). This is important because consistent predictive accuracy across different types of recipes ensures that the model does not systematically favor one group over another.
+
+### Group Definitions
+
+- **Group X:** Quick recipes (`actual ≤ 60 minutes`)  
+- **Group Y:** Slow recipes (`actual > 60 minutes`)  
+
+### Evaluation Metric
+
+- **Root Mean Squared Error (RMSE)**: Measures the average deviation of predicted cooking time from the actual time. RMSE is appropriate here because it penalizes larger errors more heavily, which is critical when assessing fairness across groups with potentially very different cooking times.
+
+### Hypotheses
+
+- **Null Hypothesis (H₀):** The model is fair; the RMSE for quick recipes and slow recipes are roughly the same, and any differences are due to random chance.  
+- **Alternative Hypothesis (H₁):** The model is unfair; RMSE for quick recipes is significantly lower than RMSE for slow recipes, indicating unequal predictive performance.
+
+### Test Statistic
+
+- **Observed Difference in RMSE:**  
+  \[
+  \text{Observed Diff} = \text{RMSE}_{\text{quick}} - \text{RMSE}_{\text{slow}}
+  \]  
+  Here, a negative difference indicates that slow recipes are predicted less accurately.
+
+- **Significance Level:** α = 0.05  
+- **Permutation Test:** Randomly shuffle group labels (`is_quick`) 5,000 times to generate the null distribution of the test statistic.
+
+### Results
+
+| Group | Number of Samples | RMSE (minutes) |
+|-------|-----------------|----------------|
+| Quick recipes (≤60 min) | 15,701 | 14.31 |
+| Slow recipes (>60 min) | 2,434 | 34.13 |
+
+- **Observed Difference (Quick - Slow):** -19.83 minutes  
+- **P-value:** 0.0000  
+
+Since the p-value is less than 0.05, we **reject the null hypothesis**. This provides strong evidence that the model predicts cooking time for slow recipes significantly less accurately than for quick recipes.
+
+### Interpretation
+
+- The model performs much better on quick recipes, with RMSE of 14.31 minutes, compared to 34.13 minutes for slow recipes.  
+- This disparity likely arises because slow recipes are **fewer in number** and more variable in complexity, making them harder to predict accurately.  
+- From a fairness perspective, this indicates that the model **systematically underperforms on longer recipes**, which should be considered in downstream applications (e.g., recipe recommendation or planning).
+
+### Conclusion
+
+The permutation test demonstrates that the model is **not fully fair** across recipe groups. Future improvements could include incorporating more features that capture the complexity of slow recipes, such as detailed step descriptions or ingredient interactions, to reduce this performance gap.
+
+<iframe
+  src="assets/fairness_permutation_test.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 
