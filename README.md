@@ -462,12 +462,7 @@ To evaluate whether the final cooking time prediction model is fair, I compared 
 - **Alternative Hypothesis (H₁):** The model is unfair; RMSE for quick recipes is significantly lower than RMSE for slow recipes, indicating unequal predictive performance.
 
 ### Test Statistic
-
-- **Observed Difference in RMSE:**  
-  \[
-  \text{Observed Diff} = \text{RMSE}_{\text{quick}} - \text{RMSE}_{\text{slow}}
-  \]  
-  Here, a negative difference indicates that slow recipes are predicted less accurately.
+- **Observed Difference in RMSE:** subtracting the RMSE of the slow model from the RMSE of the quick model.
 
 - **Significance Level:** α = 0.05  
 - **Permutation Test:** Randomly shuffle group labels (`is_quick`) 5,000 times to generate the null distribution of the test statistic.
