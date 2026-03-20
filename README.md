@@ -497,7 +497,7 @@ The permutation test demonstrates that the model is **not fully fair** across re
 <iframe
   src="assets/fairness_permutation_test.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
