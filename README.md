@@ -345,13 +345,11 @@ Overall, this regression setup and the RMSE metric allow me to **leverage recipe
 ## Baseline Model
 
 ### Model Description
-
 I built a **Random Forest Regressor** to predict cooking time (`minutes`) for recipes. Random forests are flexible, non-linear models that can capture complex relationships between features without assuming a specific functional form.
 
 To reduce the influence of extreme outliers, I restricted the dataset to recipes with cooking times between 0 and 300 minutes. Extremely large cooking times may represent data entry errors or atypical recipes, and filtering them helps the model focus on realistic cooking scenarios.
 
 ### Features Used
-
 The model uses the following **quantitative features**:
 
 | Feature | Type | Description |
@@ -369,11 +367,9 @@ The model uses the following **quantitative features**:
 All features are numeric, so no encoding was required.
 
 ### Preprocessing
-
 I applied **standardization** using `StandardScaler` to scale the features before training. While tree-based models like Random Forests do not strictly require scaling, this ensures consistency and allows for easier comparison with future models.
 
 ### Train-Test Split
-
 The dataset was split into:
 - **Training set:** 75%  
 - **Test set:** 25%  
@@ -381,20 +377,71 @@ The dataset was split into:
 This ensures that performance is evaluated on unseen data to assess generalization.
 
 ### Model Performance
-
 - **Test RMSE:** 42.47 minutes  
 - **Test R²:** 0.1228  
 
 ### Evaluation
-
 The model provides a **baseline estimate** of cooking time using only quantitative recipe features. An RMSE of about 42 minutes indicates the typical magnitude of prediction errors, and the R² value of 0.1228 shows that there is still substantial unexplained variability in cooking times.
 
 ### Conclusion
-
 This baseline model establishes a starting point for predicting cooking time. While it captures some patterns, such as the effect of recipe complexity and nutritional content, further improvements could be achieved by adding richer features—such as text data from recipe titles, descriptions, or step instructions—to better capture factors influencing preparation time.
 
 
 ## Final Model
+
+### Feature Engineering
+To improve predictions of recipe cooking time, I added **log-transformed nutritional features** to the model. Specifically, for each nutrition column (`calories`, `total fat`, `sugar`, `sodium`, `protein`, `saturated fat`, `carbohydrates`), I created a new feature using `log1p` transformation:
+
+- `log_calories`, `log_total fat`, `log_sugar`, `log_sodium`, `log_protein`, `log_saturated fat`, `log_carbohydrates`
+
+These log transformations are motivated by the **skewed distributions of nutrition variables**. Many recipes have low values, but a few have extremely high nutrition content (e.g., desserts or large meals). The log transformation compresses these extreme values, reducing their disproportionate influence and helping the model better capture proportional relationships between nutritional content and cooking time.
+
+The final set of features includes:
+
+- **Quantitative features:**  
+  `n_steps`, `n_ingredients`, original nutrition columns, and their log-transformed versions  
+
+No categorical features were added, so **no encoding was necessary**.
+
+### Preprocessing
+All features were standardized using `StandardScaler` to ensure consistent scaling. While Random Forests do not require scaling, standardization improves stability when combining features with very different ranges (like step counts and log-transformed nutrition).
+
+### Train-Test Split
+- Training set: 75%  
+- Test set: 25%  
+Only recipes with cooking times between 0 and 90 minutes were included, excluding extreme outliers that could represent errors or unusual recipes. This results in **keeping X recipes**, which is roughly Y% of the dataset.
+
+### Model and Hyperparameters
+I used a **Random Forest Regressor** with the following hyperparameters through **GridSearchCV**:
+
+- `n_estimators = 300` (number of trees)  
+- `max_depth = 10` (controls tree complexity)  
+
+These hyperparameters were chosen to balance flexibility and generalization, capturing non-linear relationships while reducing overfitting.
+
+### Model Performance
+
+- **Test set:**  
+  - RMSE: 18.26 minutes  
+  - R²: 0.316  
+
+- **Overall dataset:**  
+  - RMSE: 17.33 minutes  
+  - R²: 0.381  
+
+The test set performance shows that predictions are off by about 18 minutes on average, while the model explains roughly 32% of the variance in cooking times. Performance on the full dataset is slightly better, with an RMSE of 17.33 minutes and R² of 0.381, indicating the model captures meaningful patterns across the full range of recipes.
+
+### Rationale
+Adding log-transformed nutrition features is expected to improve model performance because:
+
+1. Nutrition variables reflect recipe complexity and portion size, which often correlate with cooking time.  
+2. Log transformation reduces the influence of extreme outliers, making the model less sensitive to very high-calorie or very large recipes.  
+3. Combining these features with `n_steps` and `n_ingredients` allows the model to capture multiple dimensions of recipe complexity that influence cooking time.
+
+### Conclusion
+
+The final model provides a **more accurate and robust prediction** of cooking time compared to simpler models. While a significant portion of the variation in cooking time remains unexplained, this model effectively captures meaningful patterns related to recipe structure and nutrition, providing a solid foundation for further refinement or incorporation of additional features such as text or tag-based information.
+
 ## Fairness Analysis
 
 
